@@ -78,26 +78,18 @@ namespace Baaijte.Optimizely.ImageSharp.Web.Caching
         /// <inheritdoc/>
         public async Task<IImageCacheResolver> GetAsync(string key)
         {
-            string container = GetContainer();
-            string fileId = $"{Blob.BlobUriScheme}://{Blob.DefaultProvider}/{container}/{cacheOptions.Prefix}{key}";
-
-            IBlobFactory blobFactory = ServiceLocator.Current.GetInstance<IBlobFactory>();
-            Uri uri = new($"{fileId}.meta");
-
-            Blob blob = blobFactory.GetBlob(uri);
-
-            IFileInfo metaFileInfo = await blob.AsFileInfoAsync();
-
-            if (!metaFileInfo.Exists)
+            var fileName = $"{cacheOptions.Prefix}{key}";
+            var blob = CreateBlob($"{fileName}.meta");
+            var fileInfo = await blob.AsFileInfoAsync();
+            if (!fileInfo.Exists)
+            {
                 return null;
+            }
 
-            ImageCacheMetadata metadata = await ImageCacheMetadata.ReadAsync(blob.OpenRead());
+            var metadata = await ImageCacheMetadata.ReadAsync(blob.OpenRead());
 
-            uri = new($"{fileId}{ToImageExtension(metadata)}");
-            blob = blobFactory.GetBlob(uri);
-            IFileInfo fileInfo = await blob.AsFileInfoAsync();
-
-            // Check to see if the file exists.
+            blob = CreateBlob($"{fileName}{ToImageExtension(metadata)}");
+            fileInfo = await blob.AsFileInfoAsync();
             if (!fileInfo.Exists)
             {
                 return null;
