@@ -1,22 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="..\..\dependencies.props" />
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<Version>3.0.1</Version>
-		<Author>vnbaaij</Author>
+		<TargetFramework>net10.0</TargetFramework>
+		<Version>4.0.0</Version>
+		<Authors>vnbaaij</Authors>
 		<Company>Baaijte</Company>
 		<Description>Use SixLabors.ImageSharp.Web in Optimizely</Description>
-		<Copyright>2024</Copyright>
+		<copyright>Copyright 2026, Vincent Baaij</copyright>
 		<PackageProjectUrl>https://github.com/vnbaaij/Baaijte.Optimizely.ImageSharp.Web</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/vnbaaij/Baaijte.Optimizely.ImageSharp.Web</RepositoryUrl>
-		<PackageTags>ImageSharp Optimizely Episerver</PackageTags>
-		<PackageId />
+		<PackageTags>Optimizely ImageSharp Blob Cache</PackageTags>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-		<Authors>vnbaaij</Authors>
 		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<RepositoryType>git</RepositoryType>
-		<PackageReleaseNotes>From version 3.0 this package is targeting .NET 8</PackageReleaseNotes>
+		<PackageReleaseNotes>From version 4.0 this package is targeting CMS 13 and .NET 10</PackageReleaseNotes>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\..\README.md">
@@ -32,11 +29,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EPiServer.CMS" Version="12.30.0" />
-		<PackageReference Include="EPiServer.ImageLibrary.ImageSharp" Version="2.0.3" />
-		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.4" />
-		<PackageReference Include="SixLabors.ImageSharp.Web" Version="3.1.2" />
-		<PackageReference Include="SixLabors.ImageSharp.Web.Providers.Azure" Version="3.1.2" />
+		<PackageReference Include="EPiServer.CMS" Version="[13.0.0, 14.0.0)" />
+		<PackageReference Include="EPiServer.ImageLibrary.ImageSharp" Version="13.0.0" PrivateAssets="all" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="[3.1.12, 4.0.0)" />
+		<PackageReference Include="SixLabors.ImageSharp.Web" Version="3.2.0" />
+		<PackageReference Include="SixLabors.ImageSharp.Web.Providers.Azure" Version="3.2.0" />
 	</ItemGroup>
 
 </Project>
