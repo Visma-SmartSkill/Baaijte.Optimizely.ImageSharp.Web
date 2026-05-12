@@ -1,5 +1,14 @@
 ## What's New
 
+### V4.0.0
+**Targeting .NET 10 and Optimizely CMS 13**
+
+Package now uses:
+- SixLabors.ImageSharp 3.1.12+
+- SixLabors.ImageSharp.Web 3.2.0
+- SixLabors.ImageSharp.Web.Providers.Azure 3.2.0
+
+
 ### V3.0.1
 Package now uses:
 - SixLabors.ImageSharp 3.1.4
