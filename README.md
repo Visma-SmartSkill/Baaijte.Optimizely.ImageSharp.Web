@@ -108,7 +108,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
 
 ### URL signing
 
-The package can optionally require the image url is "signed" with a hash value. <br>
+The package can optionally require that the image url is "signed" with a hash value. <br>
 This prevents that someone can generate massive expensive image processing requests, which could potentially overload your server.
 
 
