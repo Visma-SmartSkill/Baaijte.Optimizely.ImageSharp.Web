@@ -1,11 +1,9 @@
 ﻿using EPiServer;
 using EPiServer.Core;
 using EPiServer.Framework.Blobs;
-using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using SixLabors.ImageSharp.Web;
 using SixLabors.ImageSharp.Web.Caching;
@@ -73,25 +71,15 @@ namespace Baaijte.Optimizely.ImageSharp.Web.Caching
         /// <inheritdoc/>
         public async Task<IImageCacheResolver> GetAsync(string key)
         {
-            string container = GetContainer();
-            string fileId = $"{Blob.BlobUriScheme}://{Blob.DefaultProvider}/{container}/{cacheOptions.Prefix}{key}";
-
-            IBlobFactory blobFactory = ServiceLocator.Current.GetInstance<IBlobFactory>();
-            Uri uri = new($"{fileId}.meta");
-
-            Blob blob = blobFactory.GetBlob(uri);
-
+            var fileName = $"{cacheOptions.Prefix}{key}";
+            var blob = CreateBlob($"{fileName}.meta");
             if (!await blob.ExistsAsync())
             {
                 return null;
             }
 
-            ImageCacheMetadata metadata = await ImageCacheMetadata.ReadAsync(await blob.OpenReadAsync());
-
-            uri = new($"{fileId}{ToImageExtension(metadata)}");
-            blob = blobFactory.GetBlob(uri);
-
-            // Check to see if the file exists.
+            var metadata = await ImageCacheMetadata.ReadAsync(await blob.OpenReadAsync());
+            blob = CreateBlob($"{fileName}{ToImageExtension(metadata)}");
             if (!await blob.ExistsAsync())
             {
                 return null;

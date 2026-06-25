@@ -1,5 +1,6 @@
 using AlloyMVC.Extensions;
 using Baaijte.Optimizely.ImageSharp.Web;
+using Baaijte.Optimizely.ImageSharp.Web.Caching;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Data;
 using EPiServer.DependencyInjection;
@@ -33,6 +34,14 @@ public class Startup(IWebHostEnvironment webHostingEnvironment)
 
         services.AddBaaijteOptimizelyImageSharp();
 
+        // Configure a different location for the cache.
+        services.Configure<BlobImageCacheOptions>(o =>
+        {
+            var dir = Directory.CreateDirectory(
+                Path.Combine(webHostingEnvironment.ContentRootPath, "App_Data", "img-cache"));
+            o.CacheFolder = dir.FullName;
+        });
+
         services.AddSession(options =>
         {
             options.IdleTimeout = TimeSpan.FromSeconds(10);
@@ -51,7 +60,7 @@ public class Startup(IWebHostEnvironment webHostingEnvironment)
         // Required by Wangkanai.Detection
         app.UseDetection();
         app.UseSession();
-        
+
         app.UseBaaijteOptimizelyImageSharp();
 
         app.UseStaticFiles();
